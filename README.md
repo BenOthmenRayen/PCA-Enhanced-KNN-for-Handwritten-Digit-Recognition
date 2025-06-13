@@ -62,7 +62,25 @@ print(f"Accuracy after PCA + KNN: {accuracy * 100:.2f}%")
 ```
 <p align="center">
       <img src="media/4.png" width="30%" />
-</p>     
+</p>  
+  
+## PCA Function:     
+```
+def my_pca(X, n_components):
+    X_meaned = X - np.mean(X, axis=0)
+    cov_matrix = np.cov(X_meaned, rowvar=False)
+    eigenvalues, eigenvectors = np.linalg.eigh(cov_matrix)
+    sorted_idx = np.argsort(eigenvalues)[::-1]
+    sorted_eigenvalues = eigenvalues[sorted_idx]
+    sorted_eigenvectors = eigenvectors[:, sorted_idx]
+    components = sorted_eigenvectors[:, :n_components]
+    explained_variance = sorted_eigenvalues[:n_components]
+    X_reduced = np.dot(X_meaned, components)
+    return X_reduced, components, explained_variance
+```
+## KNN Function:
+The **KNN** classification method used in this project is based on a reusable function already implemented in a previous work. For detailed implementation and explanation,         
+please refer to [this related project](https://github.com/BenOthmenRayen/Digit-Classification-using-Hu-Moments-and-K-Nearest-Neighbors-on-the-MNIST-Dataset/blob/main/README.md).         
 
 
 
